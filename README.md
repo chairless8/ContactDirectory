@@ -1,27 +1,54 @@
-# ContactDirectory
+Frontend de la Aplicación de Contactos
+Este proyecto es el frontend de una aplicación de gestión de contactos desarrollada con Angular.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.6.
+Requisitos
+Node.js y npm instalados en tu sistema.
 
-## Development server
+Angular CLI instalado globalmente. Si no lo tienes, puedes instalarlo con:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+bash
+Copy code
+npm install -g @angular/cli
+Backend de la aplicación en funcionamiento (desarrollado con Laravel).
 
-## Code scaffolding
+Instalación
+Clona el repositorio:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+bash
+Copy code
+git clone https://github.com/tu-usuario/tu-repositorio.git
+Accede al directorio del proyecto:
 
-## Build
+bash
+Copy code
+cd tu-repositorio
+Instala las dependencias:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+bash
+Copy code
+npm install
+Ejecución
+Para iniciar la aplicación en modo de desarrollo:
 
-## Running unit tests
+bash
+Copy code
+ng serve
+La aplicación estará disponible en http://localhost:4200.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Configuración
+Backend API: Asegúrate de que el backend está corriendo y accesible. Si necesitas cambiar la URL de la API, modifícala en el servicio ContactService:
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+typescript
+Copy code
+// src/app/services/contact.service.ts
+private apiUrl = 'http://tu-backend.com/api/contacts';
+Funcionalidades
+Listar Contactos: Visualiza todos los contactos almacenados.
+Buscar Contactos: Utiliza la barra de búsqueda para encontrar contactos por nombre, empresa, teléfono, email o dirección.
+Agregar Contacto: Añade nuevos contactos con información detallada, incluyendo teléfonos, emails y direcciones.
+Editar Contacto: Modifica la información de contactos existentes.
+Eliminar Contacto: Elimina contactos y sus datos asociados.
+Tecnologías Utilizadas
+Angular: Framework para desarrollar aplicaciones web dinámicas.
+TypeScript: Superconjunto de JavaScript que añade tipado estático.
+Tailwind CSS: Framework de utilidades para estilizar la aplicación.
