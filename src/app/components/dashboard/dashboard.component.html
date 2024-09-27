@@ -1,0 +1,77 @@
+<!-- src/app/components/dashboard/dashboard.component.html -->
+<div class="container mx-auto px-4 py-8">
+  <!-- Search Bar -->
+  <app-search-bar (search)="onSearch($event)"></app-search-bar>
+
+  <!-- Add Contact Button -->
+  <div class="flex justify-end my-4">
+    <button
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+      (click)="openAddModal()"
+    >
+      Añadir Contacto
+    </button>
+  </div>
+
+  <!-- Contacts Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded">
+      <!-- Table Head -->
+      <thead>
+        <tr>
+          <th class="px-6 py-3 bg-gray-100 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
+            Nombre
+          </th>
+          <th class="px-6 py-3 bg-gray-100 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">
+            Empresa
+          </th>
+          <th class="px-6 py-3 bg-gray-100 text-right text-sm font-medium text-gray-600 uppercase tracking-wider">
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <!-- Table Body -->
+      <tbody>
+        <tr
+          *ngFor="let contact of filteredContacts"
+          class="border-b hover:bg-gray-50"
+        >
+          <td class="px-6 py-4 whitespace-nowrap">
+            {{ contact.name }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            {{ contact.company }}
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap text-right">
+            <button
+              class="text-blue-600 hover:text-blue-800 mr-2"
+              [routerLink]="['/contact', contact.id]"
+            >
+              Ver
+            </button>
+            <button
+              class="text-green-600 hover:text-green-800 mr-2"
+              (click)="openEditModal(contact)"
+            >
+              Editar
+            </button>
+            <button
+              class="text-red-600 hover:text-red-800"
+              (click)="deleteContact(contact)"
+            >
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal for Add/Edit Contact -->
+  <app-modal *ngIf="isModalOpen" (closeModal)="closeModal()">
+    <app-contact-form
+      [contact]="currentContact!"
+      (saveContact)="saveContact($event)"
+    ></app-contact-form>
+  </app-modal>
+</div>

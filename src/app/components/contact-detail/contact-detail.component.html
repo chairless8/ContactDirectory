@@ -1,0 +1,15 @@
+<div class="container mx-auto px-4 py-8">
+  <button
+    class="mb-4 text-blue-600 hover:text-blue-800"
+    (click)="goBack()"
+  >
+    &larr; Regresar
+  </button>
+
+  <div class="bg-white p-6 rounded shadow-md">
+    <h2 class="text-2xl font-bold mb-4">{{ contact?.name }}</h2>
+    <p class="mb-2"><strong>Empresa:</strong> {{ contact?.company }}</p>
+    <p class="mb-2"><strong>Notas:</strong> {{ contact?.notes }}</p>
+    <!-- Añade otros campos similares aquí -->
+  </div>
+</div>
