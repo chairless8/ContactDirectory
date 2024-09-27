@@ -1,15 +1,41 @@
 <div class="container mx-auto px-4 py-8">
-  <button
-    class="mb-4 text-blue-600 hover:text-blue-800"
-    (click)="goBack()"
-  >
+  <a routerLink="/dashboard" class="mb-4 text-blue-600 hover:text-blue-800">
     &larr; Regresar
-  </button>
+  </a>
 
-  <div class="bg-white p-6 rounded shadow-md">
-    <h2 class="text-2xl font-bold mb-4">{{ contact?.name }}</h2>
-    <p class="mb-2"><strong>Empresa:</strong> {{ contact?.company }}</p>
-    <p class="mb-2"><strong>Notas:</strong> {{ contact?.notes }}</p>
-    <!-- Añade otros campos similares aquí -->
+  <div class="bg-white p-6 rounded shadow-md" *ngIf="contact">
+    <h2 class="text-2xl font-bold mb-4">{{ contact.name }}</h2>
+    <p class="mb-2"><strong>Empresa:</strong> {{ contact.company }}</p>
+    <p class="mb-2"><strong>Notas:</strong> {{ contact.notes }}</p>
+    <p class="mb-2"><strong>Cumpleaños:</strong> {{ contact.birthday | date }}</p>
+    <p class="mb-2"><strong>Página Web:</strong> <a [href]="contact.website" target="_blank">{{ contact.website }}</a></p>
+
+    <!-- Teléfonos -->
+    <div *ngIf="contact.phones?.length">
+      <h3 class="text-xl font-bold mt-4">Teléfonos</h3>
+      <ul>
+        <li *ngFor="let phone of contact.phones">{{ phone.phone_number }}</li>
+      </ul>
+    </div>
+
+    <!-- Emails -->
+    <div *ngIf="contact.emails?.length">
+      <h3 class="text-xl font-bold mt-4">Emails</h3>
+      <ul>
+        <li *ngFor="let email of contact.emails">{{ email.email }}</li>
+      </ul>
+    </div>
+
+    <!-- Direcciones -->
+    <div *ngIf="contact.addresses?.length">
+      <h3 class="text-xl font-bold mt-4">Direcciones</h3>
+      <div *ngFor="let address of contact.addresses" class="mt-2">
+        <p><strong>Dirección:</strong> {{ address.address_line }}</p>
+        <p><strong>Ciudad:</strong> {{ address.city }}</p>
+        <p><strong>Estado:</strong> {{ address.state }}</p>
+        <p><strong>Código Postal:</strong> {{ address.postal_code }}</p>
+        <p><strong>País:</strong> {{ address.country }}</p>
+      </div>
+    </div>
   </div>
 </div>

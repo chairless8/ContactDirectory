@@ -1,16 +1,39 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 export interface Contact {
-  id: number;
+  id?: number;
   name: string;
   notes?: string;
-  birthday?: Date;
+  birthday?: string;
   website?: string;
   company?: string;
-  phones?: string[];
-  emails?: string[];
-  addresses?: string[];
+  phones: Phone[];
+  emails: Email[];
+  addresses: Address[];
+  phones_to_delete?: number[];
+  emails_to_delete?: number[];
+  addresses_to_delete?: number[];
+}
+
+export interface Phone {
+  id: number | null;
+  phone_number: string;
+}
+
+export interface Email {
+  id: number | null;
+  email: string;
+}
+
+export interface Address {
+  id: number | null;
+  address_line: string;
+  city?: string;
+  state?: string;
+  postal_code?: string;
+  country?: string;
 }
 
 @Injectable({
@@ -18,57 +41,34 @@ export interface Contact {
 })
 export class ContactService {
 
-  private contacts: Contact[] = [
-    {
-      id: 1,
-      name: 'Juan Pérez',
-      company: 'Empresa XYZ',
-      phones: ['123456789', '987654321'],
-      emails: ['juan@example.com'],
-      addresses: ['Calle Falsa 123'],
-    },
-    {
-      id: 2,
-      name: 'Ana López',
-      company: 'Otra Empresa',
-      phones: ['987654321', '123456789'],
-      emails: ['algo@gmail.com'],
-      addresses: ['Av. Principal 456'],
-    },
-    {
-      id: 3,
-      name: 'Pedro Rodríguez',
-      company: 'La Otra Empresa',
-      phones: ['123456789'],
-      emails: ['some@gmail.com'],
-      addresses: ['Calle Falsa 123'],
-    },
-    // Agrega más contactos dummy aquí
-  ];
+  private apiUrl = 'http://localhost:8000/api/contacts';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getContacts(): Observable<Contact[]> {
-    return of(this.contacts);
-  }
-
-  getContactById(id: number): Observable<Contact | undefined> {
-    const contact = this.contacts.find(c => c.id === id);
-    return of(contact);
-  }
-
-  addContact(contact: Contact): void {
-    this.contacts.push(contact);
-  }
-
-  updateContact(updatedContact: Contact): void {
-    const index = this.contacts.findIndex(c => c.id === updatedContact.id);
-    if (index !== -1) {
-      this.contacts[index] = updatedContact;
+  getContacts(searchTerm?: string, page: number = 1): Observable<any> {
+    let params: any = { page };
+    if (searchTerm) {
+      params.search = searchTerm;
     }
+    return this.http.get<any>(this.apiUrl, { params });
   }
 
-  deleteContact(id: number): void {
-    this.contacts = this.contacts.filter(c => c.id !== id);
+  getContactById(id: number): Observable<Contact> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Contact>(url);
+  }
+
+  addContact(contact: Contact): Observable<Contact> {
+    return this.http.post<Contact>(this.apiUrl, contact);
+  }
+
+  updateContact(updatedContact: Contact): Observable<Contact> {
+    const url = `${this.apiUrl}/${updatedContact.id}`;
+    return this.http.put<Contact>(url, updatedContact);
+  }
+
+  deleteContact(id: number): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete(url);
   }
 }

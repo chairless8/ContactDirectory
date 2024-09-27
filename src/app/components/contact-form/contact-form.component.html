@@ -1,4 +1,5 @@
-<form (ngSubmit)="onSubmit()" #contactForm="ngForm">
+<form (ngSubmit)="onSubmit()" #contactForm="ngForm" *ngIf="contact">
+  <!-- Nombre -->
   <div class="mb-4">
     <label class="block text-gray-700">Nombre</label>
     <input
@@ -9,8 +10,150 @@
     />
   </div>
 
-  <!-- Añade otros campos similares aquí -->
+  <!-- Notas -->
+  <div class="mb-4">
+    <label class="block text-gray-700">Notas</label>
+    <textarea
+      [(ngModel)]="contact.notes"
+      name="notes"
+      class="w-full p-2 border border-gray-300 rounded"
+    ></textarea>
+  </div>
 
+  <!-- Fecha de Cumpleaños -->
+  <div class="mb-4">
+    <label class="block text-gray-700">Fecha de Cumpleaños</label>
+    <input
+      type="date"
+      [(ngModel)]="contact.birthday"
+      name="birthday"
+      class="w-full p-2 border border-gray-300 rounded"
+    />
+  </div>
+
+  <!-- Página Web -->
+  <div class="mb-4">
+    <label class="block text-gray-700">Página Web</label>
+    <input
+      type="url"
+      [(ngModel)]="contact.website"
+      name="website"
+      class="w-full p-2 border border-gray-300 rounded"
+    />
+  </div>
+
+  <!-- Empresa -->
+  <div class="mb-4">
+    <label class="block text-gray-700">Empresa</label>
+    <input
+      [(ngModel)]="contact.company"
+      name="company"
+      class="w-full p-2 border border-gray-300 rounded"
+    />
+  </div>
+
+  <!-- Emails -->
+<div class="mb-4">
+  <label class="block text-gray-700">Emails</label>
+  <div
+    *ngFor="let emailObj of contact.emails; let i = index; trackBy: trackByIndex"
+    class="flex items-center mb-2"
+  >
+    <input
+      [(ngModel)]="contact.emails[i].email"
+      name="emails-{{ i }}"
+      id="emails-{{ i }}"
+      type="email"
+      class="w-full p-2 border border-gray-300 rounded"
+      required
+    />
+    <button
+      type="button"
+      (click)="removeEmail(i)"
+      class="ml-2 text-red-500"
+    >
+      Eliminar
+    </button>
+  </div>
+  <button
+    type="button"
+    (click)="addEmail()"
+    class="text-blue-500"
+  >
+    Añadir Email
+  </button>
+</div>
+
+<!-- Teléfonos -->
+<div class="mb-4">
+  <label class="block text-gray-700">Teléfonos</label>
+  <div
+    *ngFor="let phoneObj of contact.phones; let i = index; trackBy: trackByIndex"
+    class="flex items-center mb-2"
+  >
+    <input
+      [(ngModel)]="contact.phones[i].phone_number"
+      name="phones-{{ i }}"
+      class="w-full p-2 border border-gray-300 rounded"
+      required
+    />
+    <button
+      type="button"
+      (click)="removePhone(i)"
+      class="ml-2 text-red-500"
+    >
+      Eliminar
+    </button>
+  </div>
+  <button
+    type="button"
+    (click)="addPhone()"
+    class="text-blue-500"
+  >
+    Añadir Teléfono
+  </button>
+</div>
+
+  <!-- Direcciones -->
+  <div class="mb-4">
+    <label class="block text-gray-700">Direcciones</label>
+    <div *ngFor="let address of contact.addresses; let i = index" class="mb-4 border p-2">
+      <label>Dirección</label>
+      <input
+        [(ngModel)]="contact.addresses[i].address_line"
+        name="addresses-{{ i }}-address_line"
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+      <label>Ciudad</label>
+      <input
+        [(ngModel)]="contact.addresses[i].city"
+        name="addresses-{{ i }}-city"
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+      <label>Estado</label>
+      <input
+        [(ngModel)]="contact.addresses[i].state"
+        name="addresses-{{ i }}-state"
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+      <label>Código Postal</label>
+      <input
+        [(ngModel)]="contact.addresses[i].postal_code"
+        name="addresses-{{ i }}-postal_code"
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+      <label>País</label>
+      <input
+        [(ngModel)]="contact.addresses[i].country"
+        name="addresses-{{ i }}-country"
+        class="w-full p-2 border border-gray-300 rounded"
+      />
+      <button type="button" (click)="removeAddress(i)" class="mt-2 text-red-500">Eliminar Dirección</button>
+    </div>
+    <button type="button" (click)="addAddress()" class="text-blue-500">Añadir Dirección</button>
+  </div>
+
+  <!-- Botón Guardar -->
   <div class="mt-6 text-right">
     <button
       type="submit"

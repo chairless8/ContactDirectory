@@ -1,0 +1,20 @@
+
+:host {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 0.5rem; /* Equivalente a Tailwind 'rounded' */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Equivalente a Tailwind 'shadow-lg' */
+  padding: 1.5rem; /* Equivalente a Tailwind 'p-6' */
+  width: 100%;
+  max-width: 28rem; /* Equivalente a Tailwind 'max-w-md' */
+  max-height: 80vh; /* Establecer altura máxima */
+  overflow-y: auto; /* Habilitar scroll vertical */
+}
